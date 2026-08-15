@@ -1,0 +1,33 @@
+TRABAJO PROGRAMACION ANALITICA
+
+Leer el documento donde se especifica el trabajo a realizar
+
+Este es el resumen del dataset
+
+* TIPO DE PROBLEMA: CLASIFICACION
+
+* DESCRIPCION:
+El objetivo del conjunto de datos es predecir de forma diagnóstica si un paciente
+tiene diabetes o no, según ciertas mediciones de diagnóstico incluidas en el 
+conjunto de datos.
+Se colocaron varias restricciones en la selección de estas instancias de una
+ base de datos más grande. En particular, todos los pacientes aquí son mujeres 
+de al menos 21 años
+
+La idea es usar estos registros de pacientes para determinar qué pacientes tienen 
+enfermedad diabetes y cuáles no.
+
+* DATOS:
+
+Pregnancies: Numero de veces qeu ha estado embarazada
+Glucose: Concentracion de Plasma de glucosa en  2 horass en prueba oralnde tolerancia a la glucosa
+BloodPressure: Presion sanguinea (mm Hg)
+SkinThickness: Espesor de la piel en el pliegue del Tríceps(mm)
+Insulin: 2-Horas suero insulina (mu U/ml)
+BMI: Indice de masa corporal (Peso en kg/(altura in m)^2)
+DiabetesPedigreeFunction: Diabetes pedigree function
+Age: Edad en Años
+
+* DATOS DE SALIDA:
+Outcome: Variable categorica (0 o 1), SI es == 1 tiene diabetes
+
