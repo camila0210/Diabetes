@@ -27,3 +27,19 @@ A diferencia de la convención por defecto de esta plantilla, en este proyecto *
 **Motivo:** es un dataset estático, pequeño y sin datos sensibles ni PII, provisto directamente por el docente para un trabajo académico. Priorizamos la reproducibilidad total del análisis — que cualquier compañero o el docente pueda clonar el repo y ver/usar cada etapa de los datos sin pasos adicionales — sobre la práctica general de no versionar datos.
 
 Esta decisión debería revisarse si el dataset cambia de fuente, crece de tamaño, o llega a contener información sensible.
+
+### Actualización - Feature Engineering (Tarea 4)
+
+Se agregan al versionado, por la misma razón de reproducibilidad ya explicada:
+
+- `data/03_primary/diabetes_clean.parquet`: dataset sin duplicados ni filas sin
+  `Outcome` (787 filas), aún sin imputar.
+- `data/05_model_input/train.parquet` y `test.parquet`: split 80/20 estratificado
+  (semilla fija = 42), ya imputado (mediana, ajustada solo con train). Este split es
+  la fuente única de verdad para las Tareas 5, 6 y 7 — no se debe volver a generar un
+  split distinto en esos notebooks.
+- `data/06_models/preprocesador_imputacion.joblib`: el `ColumnTransformer` con el
+  imputador ya ajustado, para reutilizarlo sin reajustarlo en tareas posteriores.
+
+`data/04_feature/` no se utiliza en este proyecto: no se generan variables derivadas
+nuevas en esta tarea (dataset sin variables categóricas para combinar).
