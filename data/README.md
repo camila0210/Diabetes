@@ -72,3 +72,11 @@ Se agregan al versionado:
   cruzada (KFold=5, train).
 - `data/07_model_output/seleccion_modelos_test.csv`: comparación final en test
   entre Random Forest afinado, KNN afinado y el heurístico de la Tarea 5.
+
+### Actualización 2 - Correcciones tras revisión de issues
+
+- Se agrega `log1p` a `Insulin` y `DiabetesPedigreeFunction` (variables con mayor
+  skew/kurtosis) antes de guardar `data/05_model_input/`.
+- Se agrega una demostración de `StandardScaler` (issue lo pedía explícitamente),
+  sin persistirlo en los datos guardados — el escalado real se aplica dentro de
+  los pipelines de modelado de las Tareas 5 y 6, según lo necesite cada modelo.
