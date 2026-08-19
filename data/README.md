@@ -56,3 +56,19 @@ Se agregan al versionado:
 - `data/07_model_output/baseline_metrics_test.csv` y `baseline_metrics_cv.csv`:
   métricas (accuracy, precision, recall, F1) de los 3 modelos comparados, en test y
   en validación cruzada (KFold=5, train), respectivamente.
+
+### Actualización - Selección del Mejor Modelo (Tarea 6)
+
+Se agregan al versionado:
+
+- `data/06_models/modelo_final_random_forest.joblib`: Random Forest afinado
+  (`GridSearchCV`, `class_weight="balanced"`, `max_depth=5`, `min_samples_leaf=10`,
+  `n_estimators=200`). Se lleva a la Tarea 7 por razones de interpretabilidad
+  (variable múltiple, score de probabilidad continuo), **no** por desempeño: en
+  test, el heurístico de la Tarea 5 obtuvo mejor F1 (0.704 vs. 0.656). Esta
+  comparación honesta queda documentada en los Hallazgos del notebook.
+- `data/07_model_output/seleccion_modelos_cv.csv`: comparación de 5 modelos
+  (Regresión Logística, Árbol de Decisión, Random Forest, KNN, SVM) en validación
+  cruzada (KFold=5, train).
+- `data/07_model_output/seleccion_modelos_test.csv`: comparación final en test
+  entre Random Forest afinado, KNN afinado y el heurístico de la Tarea 5.
