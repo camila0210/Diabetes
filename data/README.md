@@ -43,3 +43,11 @@ Se agregan al versionado, por la misma razón de reproducibilidad ya explicada:
 
 `data/04_feature/` no se utiliza en este proyecto: no se generan variables derivadas
 nuevas en esta tarea (dataset sin variables categóricas para combinar).
+
+### Actualización 2 - Correcciones tras revisión de issues
+
+- Se agrega `log1p` a `Insulin` y `DiabetesPedigreeFunction` (variables con mayor
+  skew/kurtosis) antes de guardar `data/05_model_input/`.
+- Se agrega una demostración de `StandardScaler` (issue lo pedía explícitamente),
+  sin persistirlo en los datos guardados — el escalado real se aplica dentro de
+  los pipelines de modelado de las Tareas 5 y 6, según lo necesite cada modelo.
