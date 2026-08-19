@@ -56,3 +56,11 @@ Se agregan al versionado:
 - `data/07_model_output/baseline_metrics_test.csv` y `baseline_metrics_cv.csv`:
   métricas (accuracy, precision, recall, F1) de los 3 modelos comparados, en test y
   en validación cruzada (KFold=5, train), respectivamente.
+
+### Actualización 2 - Correcciones tras revisión de issues
+
+- Se agrega `log1p` a `Insulin` y `DiabetesPedigreeFunction` (variables con mayor
+  skew/kurtosis) antes de guardar `data/05_model_input/`.
+- Se agrega una demostración de `StandardScaler` (issue lo pedía explícitamente),
+  sin persistirlo en los datos guardados — el escalado real se aplica dentro de
+  los pipelines de modelado de las Tareas 5 y 6, según lo necesite cada modelo.
