@@ -4,6 +4,7 @@ data/**
 # except their sub-folders
 !data/**/
 !data/README.md
+!data/08_reporting/**
 
 # also keep all .gitkeep files
 !.gitkeep
