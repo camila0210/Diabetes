@@ -48,6 +48,19 @@ Se agregan al versionado, por la misma razón de reproducibilidad ya explicada:
 `data/04_feature/` no se utiliza en este proyecto: no se generan variables derivadas
 nuevas en esta tarea (dataset sin variables categóricas para combinar).
 
+### Actualización - Modelo Baseline (Tarea 5)
+
+Se agregan al versionado:
+
+- `data/06_models/modelo_baseline_heuristico.joblib`: modelo heurístico basado en
+  `Glucose > 127` (umbral respaldado tanto por los datos del EDA como por el criterio
+  clínico estándar de diagnóstico de diabetes), elegido como baseline oficial tras
+  compararlo contra un `DummyClassifier` trivial y una variante combinada
+  (Glucose + BMI) que resultó peor que el trivial en accuracy.
+- `data/07_model_output/baseline_metrics_test.csv` y `baseline_metrics_cv.csv`:
+  métricas (accuracy, precision, recall, F1) de los 3 modelos comparados, en test y
+  en validación cruzada (KFold=5, train), respectivamente.
+
 ### Actualización 2 - Correcciones tras revisión de issues
 
 - Se agrega `log1p` a `Insulin` y `DiabetesPedigreeFunction` (variables con mayor
