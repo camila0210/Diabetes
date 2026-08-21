@@ -22,6 +22,10 @@ layered data-engineering convention
 
 ## 📌 Nota para este proyecto (Diabetes)
 
+A diferencia de la convención por defecto de esta plantilla, en este proyecto **sí se versionan** los datasets generados en cada etapa del pipeline (`data/01_raw/diabetes.csv`, `data/02_intermediate/diabetes_type_fixed.parquet`, y los que sigan), en lugar de dejarlos ignorados por git.
+
+**Motivo:** es un dataset estático, pequeño y sin datos sensibles ni PII, provisto directamente por el docente para un trabajo académico. Priorizamos la reproducibilidad total del análisis — que cualquier compañero o el docente pueda clonar el repo y ver/usar cada etapa de los datos sin pasos adicionales — sobre la práctica general de no versionar datos.
+
 A diferencia de la convención por defecto de esta plantilla, en este proyecto **sí se versiona** el dataset crudo (`data/01_raw/diabetes.csv`) en el repositorio, en lugar de dejarlo ignorado por git.
 
 **Motivo:** es un dataset estático, pequeño y sin datos sensibles ni PII, provisto directamente por el docente para un trabajo académico. Priorizamos la reproducibilidad total del análisis — que cualquier compañero o el docente pueda clonar el repo y correr los notebooks sin pasos adicionales de descarga — sobre la práctica general de no versionar datos.
