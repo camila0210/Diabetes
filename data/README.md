@@ -26,6 +26,10 @@ A diferencia de la convención por defecto de esta plantilla, en este proyecto *
 
 **Motivo:** es un dataset estático, pequeño y sin datos sensibles ni PII, provisto directamente por el docente para un trabajo académico. Priorizamos la reproducibilidad total del análisis — que cualquier compañero o el docente pueda clonar el repo y ver/usar cada etapa de los datos sin pasos adicionales — sobre la práctica general de no versionar datos.
 
+A diferencia de la convención por defecto de esta plantilla, en este proyecto **sí se versiona** el dataset crudo (`data/01_raw/diabetes.csv`) en el repositorio, en lugar de dejarlo ignorado por git.
+
+**Motivo:** es un dataset estático, pequeño y sin datos sensibles ni PII, provisto directamente por el docente para un trabajo académico. Priorizamos la reproducibilidad total del análisis — que cualquier compañero o el docente pueda clonar el repo y correr los notebooks sin pasos adicionales de descarga — sobre la práctica general de no versionar datos.
+
 Esta decisión debería revisarse si el dataset cambia de fuente, crece de tamaño, o llega a contener información sensible.
 
 ### Actualización - Feature Engineering (Tarea 4)
