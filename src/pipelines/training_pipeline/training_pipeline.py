@@ -21,6 +21,7 @@ from sklearn.metrics import (
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
+from src.data.split_validation import validar_split_train_test
 from src.model.train import COLUMNAS_FEATURES, TARGET, construir_pipeline_modelo
 
 logger = logging.getLogger(__name__)
@@ -73,6 +74,7 @@ def ejecutar_training_pipeline(
     """Ejecuta el training pipeline completo: carga, split, entrena, evalua y guarda."""
     df = cargar_features(features_path)
     X_train, X_test, y_train, y_test = dividir_train_test(df)
+    validar_split_train_test(X_train, X_test)
 
     modelo = construir_pipeline_modelo()
     logger.info(
