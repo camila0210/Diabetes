@@ -23,6 +23,11 @@ from sklearn.pipeline import Pipeline
 
 from src.data.split_validation import validar_split_train_test
 from src.model.train import COLUMNAS_FEATURES, TARGET, construir_pipeline_modelo
+from src.model.validate import (
+    comparar_train_cv_test,
+    diagnosticar_ajuste,
+    validar_modelo_cv,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 FEATURES_PATH = REPO_ROOT / "data" / "03_primary" / "diabetes_clean.parquet"
 MODEL_PATH = REPO_ROOT / "data" / "06_models" / "pipeline_produccion_random_forest.joblib"
 METRICS_PATH = REPO_ROOT / "data" / "07_model_output" / "metricas_test.csv"
+CV_REPORT_PATH = REPO_ROOT / "data" / "07_model_output" / "comparacion_train_cv_test.csv"
 
 PROPORCION_TEST = 0.2
 SEMILLA = 42
@@ -70,6 +76,7 @@ def ejecutar_training_pipeline(
     features_path: Path = FEATURES_PATH,
     model_path: Path = MODEL_PATH,
     metrics_path: Path = METRICS_PATH,
+    cv_report_path: Path = CV_REPORT_PATH,
 ) -> tuple[Pipeline, dict[str, float]]:
     """Ejecuta el training pipeline completo: carga, split, entrena, evalua y guarda."""
     df = cargar_features(features_path)
@@ -83,14 +90,24 @@ def ejecutar_training_pipeline(
     )
     modelo.fit(X_train, y_train)
 
+    metricas_train = evaluar_modelo(modelo, X_train, y_train)
+    metricas_cv = validar_modelo_cv(modelo, X_train, y_train)
     metricas = evaluar_modelo(modelo, X_test, y_test)
     logger.info("Metricas en test: %s", metricas)
+
+    tabla_comparacion = comparar_train_cv_test(metricas_train, metricas_cv, metricas)
+    diagnostico = diagnosticar_ajuste(tabla_comparacion)
+    logger.info("Diagnostico de ajuste (train vs CV vs test): %s", diagnostico)
+    logger.info("Tabla comparativa:\n%s", tabla_comparacion)
 
     model_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(modelo, model_path)
 
     metrics_path.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([metricas]).to_csv(metrics_path, index=False)
+
+    cv_report_path.parent.mkdir(parents=True, exist_ok=True)
+    tabla_comparacion.to_csv(cv_report_path)
 
     logger.info("Modelo guardado en %s", model_path)
     return modelo, metricas
