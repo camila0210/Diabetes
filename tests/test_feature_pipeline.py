@@ -1,15 +1,18 @@
-"""Pruebas unitarias para feature_pipeline.py."""
+"""Pruebas unitarias para src/data/cleaning.py y el feature pipeline."""
+
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import pytest
 
-from scripts.feature_pipeline import (
+from src.data.cleaning import (
     convertir_tipos,
     corregir_escala_dpf,
     eliminar_filas_invalidas,
     unificar_valores_faltantes,
 )
+from src.pipelines.feature_pipeline.feature_pipeline import ejecutar_feature_pipeline
 
 GLUCOSE_VALOR_VALIDO = 120
 FILAS_ESPERADAS_TRAS_LIMPIEZA = 2
@@ -71,3 +74,16 @@ def test_eliminar_filas_invalidas_quita_outcome_nulo_y_duplicados(
 
     assert not resultado["Outcome"].isna().any()
     assert len(resultado) == FILAS_ESPERADAS_TRAS_LIMPIEZA
+
+
+def test_ejecutar_feature_pipeline_end_to_end(tmp_path: Path, df_crudo: pd.DataFrame) -> None:
+    """Prueba de integracion: corre el pipeline completo sobre un CSV temporal."""
+    input_csv = tmp_path / "diabetes_crudo.csv"
+    df_crudo.to_csv(input_csv, index=False)
+    output_parquet = tmp_path / "diabetes_clean.parquet"
+
+    resultado = ejecutar_feature_pipeline(input_path=input_csv, output_path=output_parquet)
+
+    assert output_parquet.exists()
+    assert len(resultado) == FILAS_ESPERADAS_TRAS_LIMPIEZA
+    assert not resultado["Outcome"].isna().any()
