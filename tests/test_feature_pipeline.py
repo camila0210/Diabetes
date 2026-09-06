@@ -36,6 +36,31 @@ def df_crudo() -> pd.DataFrame:
     )
 
 
+@pytest.fixture
+def df_crudo_grande() -> pd.DataFrame:
+    """DataFrame crudo con volumen suficiente para satisfacer los umbrales
+    de nulos del esquema de validacion (Tarea 2) tras la limpieza.
+
+    Incluye un par de ceros invalidos en SkinThickness e Insulin (columnas
+    con umbral de nulos mas permisivo) para seguir cubriendo la logica de
+    unificar_valores_faltantes en la prueba de integracion.
+    """
+    n = 20
+    return pd.DataFrame(
+        {
+            "Pregnancies": [i % 10 for i in range(n)],
+            "Glucose": [100 + i for i in range(n)],
+            "BloodPressure": [70 + i for i in range(n)],
+            "SkinThickness": [0 if i == 0 else 20 + i for i in range(n)],
+            "Insulin": [0 if i == 1 else 100 + i for i in range(n)],
+            "BMI": [25.0 + i * 0.5 for i in range(n)],
+            "DiabetesPedigreeFunction": [0.3 + i * 0.01 for i in range(n)],
+            "Age": [25 + i for i in range(n)],
+            "Outcome": [i % 2 for i in range(n)],
+        }
+    )
+
+
 def test_unificar_valores_faltantes_convierte_ceros_a_nan(
     df_crudo: pd.DataFrame,
 ) -> None:
@@ -76,14 +101,19 @@ def test_eliminar_filas_invalidas_quita_outcome_nulo_y_duplicados(
     assert len(resultado) == FILAS_ESPERADAS_TRAS_LIMPIEZA
 
 
-def test_ejecutar_feature_pipeline_end_to_end(tmp_path: Path, df_crudo: pd.DataFrame) -> None:
-    """Prueba de integracion: corre el pipeline completo sobre un CSV temporal."""
+def test_ejecutar_feature_pipeline_end_to_end(
+    tmp_path: Path, df_crudo_grande: pd.DataFrame
+) -> None:
+    """Prueba de integracion: corre el pipeline completo (limpieza y
+    validacion de esquema) sobre un CSV temporal."""
     input_csv = tmp_path / "diabetes_crudo.csv"
-    df_crudo.to_csv(input_csv, index=False)
+    df_crudo_grande.to_csv(input_csv, index=False)
     output_parquet = tmp_path / "diabetes_clean.parquet"
 
     resultado = ejecutar_feature_pipeline(input_path=input_csv, output_path=output_parquet)
 
     assert output_parquet.exists()
-    assert len(resultado) == FILAS_ESPERADAS_TRAS_LIMPIEZA
+    assert len(resultado) == len(df_crudo_grande)
     assert not resultado["Outcome"].isna().any()
+    assert pd.isna(resultado.loc[0, "SkinThickness"])
+    assert pd.isna(resultado.loc[1, "Insulin"])

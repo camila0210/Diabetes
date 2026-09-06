@@ -20,6 +20,7 @@ from src.data.cleaning import (
     eliminar_filas_invalidas,
     unificar_valores_faltantes,
 )
+from src.data.validation import validar_esquema
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,7 @@ def ejecutar_feature_pipeline(
     df = corregir_escala_dpf(df)
     df = convertir_tipos(df)
     df = eliminar_filas_invalidas(df)
+    df = validar_esquema(df)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(output_path, index=False, engine="pyarrow")
