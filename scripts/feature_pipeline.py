@@ -27,7 +27,6 @@ import numpy as np
 import pandas as pd
 import pyarrow as pa
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 DATA_DIR = Path("data")
