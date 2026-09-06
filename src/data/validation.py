@@ -122,3 +122,36 @@ def validar_esquema(df: pd.DataFrame, lazy: bool = True) -> pd.DataFrame:
     df_validado = ESQUEMA_FEATURES.validate(df, lazy=lazy)
     logger.info("Validación de esquema exitosa.")
     return df_validado
+
+
+ESQUEMA_INFERENCIA = DataFrameSchema(
+    {
+        "Pregnancies": Column("Int8", Check.in_range(0, 20), nullable=True),
+        "Glucose": Column(float, Check.in_range(40, 250), nullable=True),
+        "BloodPressure": Column(float, Check.in_range(20, 140), nullable=True),
+        "SkinThickness": Column(float, Check.in_range(5, 100), nullable=True),
+        "Insulin": Column(float, Check.in_range(10, 900), nullable=True),
+        "BMI": Column(float, Check.in_range(15, 70), nullable=True),
+        "DiabetesPedigreeFunction": Column(float, Check.in_range(0.05, 3.0), nullable=True),
+        "Age": Column("Int8", Check.in_range(18, 100), nullable=True),
+    },
+    coerce=True,
+)
+
+
+def validar_esquema_inferencia(df: pd.DataFrame, lazy: bool = True) -> pd.DataFrame:
+    """Valida los datos de entrada para inferencia (sin la columna Outcome).
+
+    A diferencia de `validar_esquema` (Tarea 2):
+    - No exige la columna Outcome (no existe en datos nuevos a predecir).
+    - No aplica umbral de % de nulos (el lote puede ser de una sola fila,
+      y el modelo entrenado ya sabe imputar nulos internamente).
+    - No exige ausencia de filas duplicadas.
+
+    Raises:
+        pandera.errors.SchemaErrors: si los tipos o rangos son invalidos.
+    """
+    logger.info("Validando esquema de inferencia (%d filas)...", len(df))
+    df_validado = ESQUEMA_INFERENCIA.validate(df, lazy=lazy)
+    logger.info("Validacion de esquema de inferencia exitosa.")
+    return df_validado
