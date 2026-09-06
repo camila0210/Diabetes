@@ -123,7 +123,7 @@ def ejecutar_feature_pipeline(
     df = eliminar_filas_invalidas(df)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-df.to_parquet(output_path, index=False, engine="pyarrow")
+    df.to_parquet(output_path, index=False, engine="pyarrow")
     logger.info("Features guardadas en %s", output_path)
     return df
 
