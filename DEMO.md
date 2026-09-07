@@ -15,7 +15,7 @@ lote (Tarea 2).
 
 ## URL publica
 
-<https://diabetes-ypmdfjjvsfh7jn4oyp8fna.streamlit.app/>
+<https://diabetes-hvhdxujk5jzy8zeuapp2ikn.streamlit.app/>
 
 ## Como ejecutarla localmente
 
