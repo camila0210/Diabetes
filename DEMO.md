@@ -1,4 +1,4 @@
-# Demo Online - Prediccion de Diabetes (Categoria 3, Tarea 1)
+# Demo Funcional - Prediccion de Diabetes (Categoria 3)
 
 Demo interactiva construida con Streamlit que usa el **pipeline de produccion**
 entrenado en la Categoria 2 (Arquitectura FTI): `data/06_models/pipeline_produccion_random_forest.joblib`,
@@ -9,6 +9,9 @@ A diferencia del demo de la Tarea 8 (Categoria 1, `notebooks/7-deploy/app_stream
 que usa el modelo POC con logica de transformacion manual, esta app reutiliza
 directamente el codigo ya testeado de la arquitectura FTI: la imputacion,
 transformacion log1p y escalado estan dentro del propio pipeline `.joblib`.
+
+La app tiene dos pestanas: prediccion individual (Tarea 1) y prediccion por
+lote (Tarea 2).
 
 ## URL publica
 
@@ -25,13 +28,30 @@ uv run streamlit run streamlit_app.py
 
 Se abre automaticamente en `http://localhost:8501`.
 
-## Screenshots
+## Tarea 1: prediccion individual
+
+Completa el formulario con los datos clinicos de una persona y presiona
+"Predecir" para ver el riesgo estimado (Alto/Bajo) y la probabilidad.
 
 **Riesgo alto** (Glucose=180, resto de valores tipicos):
 ![Demo produccion - riesgo alto](data/08_reporting/demo_streamlit_produccion_riesgo_alto.png)
 
 **Riesgo bajo** (Glucose=90, resto de valores tipicos):
 ![Demo produccion - riesgo bajo](data/08_reporting/demo_streamlit_produccion_riesgo_bajo.png)
+
+## Tarea 2: prediccion por lote
+
+En la pestana "Prediccion por lote", sube un archivo CSV con una o mas filas
+(columnas: `Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI,
+DiabetesPedigreeFunction, Age`). La app valida el archivo con Pandera, genera
+una prediccion y probabilidad por fila, y permite descargar el resultado.
+
+- Archivo de ejemplo de entrada: `data/01_raw/ejemplo_lote_entrada.csv`
+  (tambien se puede descargar directamente desde la app).
+- Archivo de ejemplo de salida (generado corriendo el pipeline real sobre el
+  archivo anterior): `data/07_model_output/ejemplo_lote_salida.csv`.
+
+![Demo produccion - prediccion por lote](data/08_reporting/demo_streamlit_produccion_lote.png)
 
 ## Notas tecnicas
 
