@@ -12,7 +12,7 @@ transformacion log1p y escalado estan dentro del propio pipeline `.joblib`.
 
 ## URL publica
 
-PENDIENTE: agregar URL de Streamlit Community Cloud despues del deploy.
+<https://diabetes-ypmdfjjvsfh7jn4oyp8fna.streamlit.app/>
 
 ## Como ejecutarla localmente
 
